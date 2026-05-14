@@ -1,0 +1,145 @@
+[
+  {
+    "id": "CLM-001",
+    "farmerId": "FARM-001",
+    "farmerName": "Ramesh Singh",
+    "cropType": "Wheat",
+    "claimType": "crop_loss",
+    "village": "Barwani",
+    "district": "Khargone",
+    "state": "Madhya Pradesh",
+    "geoCoordinates": {
+      "lat": 22.0321,
+      "lng": 75.0092
+    },
+    "lossAreaAcres": 2.5,
+    "description": "Heavy hailstorm destroyed standing wheat crop",
+    "status": "pending",
+    "confidenceScore": 87,
+    "geoVerified": true,
+    "rainfallMatched": true,
+    "duplicateRisk": false,
+    "aiRemarks": "High confidence. Geo-tag matches village boundary. Rainfall anomaly detected on claimed date.",
+    "images": [
+      "/uploads/clm001_img1.jpg",
+      "/uploads/clm001_img2.jpg"
+    ],
+    "videos": [],
+    "createdAt": "2026-05-10T06:30:00Z",
+    "updatedAt": "2026-05-10T06:30:00Z"
+  },
+  {
+    "id": "CLM-002",
+    "farmerId": "FARM-002",
+    "farmerName": "Sita Devi",
+    "cropType": "Cotton",
+    "claimType": "pest_damage",
+    "village": "Kasrawad",
+    "district": "Khargone",
+    "state": "Madhya Pradesh",
+    "geoCoordinates": {
+      "lat": 22.1245,
+      "lng": 75.2891
+    },
+    "lossAreaAcres": 1.8,
+    "description": "Pink bollworm infestation in cotton crop",
+    "status": "pending",
+    "confidenceScore": 72,
+    "geoVerified": true,
+    "rainfallMatched": false,
+    "duplicateRisk": true,
+    "aiRemarks": "Medium confidence. Geo verified but rainfall pattern mismatched. Similar claim from same village flagged.",
+    "images": [
+      "/uploads/clm002_img1.jpg"
+    ],
+    "videos": [],
+    "createdAt": "2026-05-11T08:15:00Z",
+    "updatedAt": "2026-05-11T08:15:00Z"
+  },
+  {
+    "id": "CLM-003",
+    "farmerId": "FARM-005",
+    "farmerName": "Bhola Yadav",
+    "cropType": "Soybean",
+    "claimType": "flood_damage",
+    "village": "Punasa",
+    "district": "Khandwa",
+    "state": "Madhya Pradesh",
+    "geoCoordinates": {
+      "lat": 22.2367,
+      "lng": 76.3489
+    },
+    "lossAreaAcres": 4.0,
+    "description": "Continuous rainfall caused waterlogging and crop rot",
+    "status": "approved",
+    "confidenceScore": 94,
+    "geoVerified": true,
+    "rainfallMatched": true,
+    "duplicateRisk": false,
+    "aiRemarks": "Very high confidence. All parameters validated. Eligible for expedited payout.",
+    "images": [
+      "/uploads/clm003_img1.jpg",
+      "/uploads/clm003_img2.jpg",
+      "/uploads/clm003_img3.jpg"
+    ],
+    "videos": [
+      "/uploads/clm003_vid1.mp4"
+    ],
+    "createdAt": "2026-05-08T10:00:00Z",
+    "updatedAt": "2026-05-12T14:30:00Z"
+  },
+  {
+    "id": "CLM-004",
+    "farmerId": "FARM-004",
+    "farmerName": "Gita Verma",
+    "cropType": "Gram",
+    "claimType": "drought_damage",
+    "village": "Jhirniya",
+    "district": "Barwani",
+    "state": "Madhya Pradesh",
+    "geoCoordinates": {
+      "lat": 21.9845,
+      "lng": 74.9012
+    },
+    "lossAreaAcres": 1.2,
+    "description": "No rainfall for 45 days, crop completely dried",
+    "status": "rejected",
+    "confidenceScore": 45,
+    "geoVerified": false,
+    "rainfallMatched": false,
+    "duplicateRisk": false,
+    "aiRemarks": "Low confidence. Geo coordinates outside claimed village boundary. Rainfall data shows adequate irrigation period.",
+    "images": [],
+    "videos": [],
+    "createdAt": "2026-05-06T12:00:00Z",
+    "updatedAt": "2026-05-13T09:00:00Z"
+  },
+  {
+    "id": "CLM-005",
+    "farmerId": "FARM-003",
+    "farmerName": "Amar Patil",
+    "cropType": "Maize",
+    "claimType": "crop_loss",
+    "village": "Segaon",
+    "district": "Khargone",
+    "state": "Madhya Pradesh",
+    "geoCoordinates": {
+      "lat": 22.0789,
+      "lng": 75.1123
+    },
+    "lossAreaAcres": 3.0,
+    "description": "Wild animal herd damaged maize field overnight",
+    "status": "pending",
+    "confidenceScore": 68,
+    "geoVerified": true,
+    "rainfallMatched": true,
+    "duplicateRisk": false,
+    "aiRemarks": "Moderate confidence. Geo and rainfall OK. Unusual claim type - manual review recommended.",
+    "images": [
+      "/uploads/clm005_img1.jpg"
+    ],
+    "videos": [],
+    "createdAt": "2026-05-13T16:45:00Z",
+    "updatedAt": "2026-05-13T16:45:00Z"
+  }
+]
