@@ -1,11 +1,23 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 const UPLOAD_DIR = path.join(__dirname, '..', '..', 'uploads');
 
+function getSubDir(mime) {
+  if (mime.startsWith('image/')) return 'images';
+  if (mime.startsWith('video/')) return 'videos';
+  return 'documents';
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, UPLOAD_DIR);
+    const sub = getSubDir(file.mimetype);
+    const dir = path.join(UPLOAD_DIR, sub);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    cb(null, dir);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);

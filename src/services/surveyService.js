@@ -52,10 +52,10 @@ async function submitSurvey(data, files = []) {
 
   const images = files
     .filter(f => f.mimetype.startsWith('image/'))
-    .map(f => `/uploads/${f.filename}`);
+    .map(f => `/uploads/images/${f.filename}`);
   const videos = files
     .filter(f => f.mimetype.startsWith('video/'))
-    .map(f => `/uploads/${f.filename}`);
+    .map(f => `/uploads/videos/${f.filename}`);
 
   const reportId = makeReportId();
 
@@ -298,7 +298,7 @@ async function getGrievanceLinkage(surveyId) {
   const survey = await getSurveyById(surveyId);
   if (!survey) return null;
   const claims = await storage.query('claims.json', c => c.farmerId === survey.farmerId);
-  return claims.length > 0 ? claims : null;
+  return claims.length > 0 ? claims : [];
 }
 
 module.exports = {

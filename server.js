@@ -14,9 +14,12 @@ process.on('unhandledRejection', (reason) => {
 
 // ── BUG-03: Ensure uploads directory exists before multer tries to write ──
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-  console.log('[KRISHI] Created missing uploads/ directory');
+for (const sub of ['', 'images', 'videos', 'documents']) {
+  const d = path.join(UPLOADS_DIR, sub);
+  if (!fs.existsSync(d)) {
+    fs.mkdirSync(d, { recursive: true });
+    if (sub) console.log(`[KRISHI] Created missing uploads/${sub}/ directory`);
+  }
 }
 const { errorHandler, notFound } = require('./src/middleware/errorHandler');
 
