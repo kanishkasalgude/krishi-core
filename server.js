@@ -32,8 +32,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '500mb' }));
+app.use(express.urlencoded({ extended: true, limit: '500mb' }));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -62,6 +62,7 @@ const server = app.listen(PORT, () => {
   console.log(`[KRISHI-PRABANDH] Server running on port ${PORT}`);
   console.log(`[KRISHI-PRABANDH] API: http://localhost:${PORT}/api`);
 });
+server.timeout = 600000;
 
 // ── BUG-05: Handle EADDRINUSE and other listen errors gracefully ──
 server.on('error', (err) => {

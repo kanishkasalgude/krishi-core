@@ -29,7 +29,7 @@ function getRegistry() {
 
 function findFarmerById(farmerId) {
   const farmers = getRegistry();
-  return farmers.find(f => f.farmer_id === farmerId) || null;
+  return farmers.find(f => f.farmer_id === farmerId || f.mobile === farmerId) || null;
 }
 
 function findFarmerByMobile(mobile) {

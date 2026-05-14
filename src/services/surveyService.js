@@ -20,6 +20,10 @@ function makeReportId() {
 }
 
 function validateSurveyData(data) {
+  // Support both Android App naming (claimType, gatNumber) and Web naming (damageType, landParcelId)
+  data.damageType = data.damageType || data.claimType;
+  data.landParcelId = data.landParcelId || data.gatNumber;
+
   const required = ['farmerId', 'cropType', 'damageType', 'village', 'landParcelId'];
   const missing = required.filter(f => !data[f] || String(data[f]).trim() === '');
   if (missing.length > 0) {
@@ -47,14 +51,18 @@ async function submitSurvey(data, files = []) {
   const farmer = validateSurveyData(data);
   const farmerDetails = farmerRegistry.getFarmerDetails(data.farmerId);
 
-  const analysis = aiService.analyzeClaim({ cropType: data.cropType, village: data.village });
+  // Quick initial metadata save
+  const images = [
+    ...files.filter(f => f.mimetype.startsWith('image/')).map(f => `/uploads/${f.filename}`),
+    ...(data.evidenceUrls || []).filter(u => !u.endsWith('.mp4') && !u.endsWith('.mov')),
+    ...(data.uploadedEvidence || []).filter(e => e.type === 'image').map(e => e.path || e.url),
+  ].filter(Boolean);
 
-  const images = files
-    .filter(f => f.mimetype.startsWith('image/'))
-    .map(f => `/uploads/${f.filename}`);
-  const videos = files
-    .filter(f => f.mimetype.startsWith('video/'))
-    .map(f => `/uploads/${f.filename}`);
+  const videos = [
+    ...files.filter(f => f.mimetype.startsWith('video/')).map(f => `/uploads/${f.filename}`),
+    ...(data.evidenceUrls || []).filter(u => u.endsWith('.mp4') || u.endsWith('.mov')),
+    ...(data.uploadedEvidence || []).filter(e => e.type === 'video').map(e => e.path || e.url),
+  ].filter(Boolean);
 
   const reportId = makeReportId();
 
@@ -111,20 +119,8 @@ async function submitSurvey(data, files = []) {
     images,
     videos,
     evidenceCount: images.length + videos.length,
-    status: 'pending',
-    workflowStage: 'Pending Sahayak Verification',
-    severity: getSeverityLevel(analysis),
-    confidenceScore: analysis.confidenceScore,
-    geoVerified: analysis.geoVerified,
-    rainfallMatched: analysis.rainfallMatched,
-    duplicateRisk: analysis.duplicateRisk,
-    aiRemarks: analysis.aiRemarks,
-    weatherEvent: analysis.rainfallMatched ? 'Weather Anomaly Detected' : 'No Weather Anomaly',
-    weatherLinkage: null,
-    assignedOfficer: '',
-    reviewRemarks: [],
-    reviewTimestamp: null,
-    grievanceLinkage: null,
+    status: 'processing',
+    workflowStage: 'Survey Submitted',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -132,19 +128,37 @@ async function submitSurvey(data, files = []) {
   const saved = await storage.addItem(SURVEYS_FILE, survey);
   if (!saved || !saved.id) return survey;
 
-  try {
-    const weatherLinkage = await resolveWeatherLinkage(farmerDetails);
-    if (weatherLinkage) {
-      const updated = await storage.updateItem(SURVEYS_FILE, saved.id, {
+  // Asynchronous processing (non-blocking)
+  setTimeout(async () => {
+    try {
+      console.log(`[KRISHI] Starting background processing for survey ${saved.id}...`);
+      
+      // Simulate heavy AI processing and video encoding
+      const analysis = aiService.analyzeClaim({ cropType: data.cropType, village: data.village });
+      const weatherLinkage = await resolveWeatherLinkage(farmerDetails);
+      
+      const updates = {
+        severity: getSeverityLevel(analysis),
+        confidenceScore: analysis.confidenceScore,
+        geoVerified: analysis.geoVerified,
+        rainfallMatched: analysis.rainfallMatched,
+        duplicateRisk: analysis.duplicateRisk,
+        aiRemarks: analysis.aiRemarks,
+        weatherEvent: analysis.rainfallMatched ? 'Weather Anomaly Detected' : 'No Weather Anomaly',
+        status: 'pending',
+        workflowStage: 'Pending Sahayak Verification',
         weatherLinkage,
         updatedAt: new Date().toISOString(),
-      });
-      return updated || saved;
+      };
+      
+      await storage.updateItem(SURVEYS_FILE, saved.id, updates);
+      console.log(`[KRISHI] Background processing completed for survey ${saved.id}`);
+    } catch (err) {
+      console.error(`[KRISHI] Background processing failed for survey ${saved.id}:`, err.message);
     }
-  } catch {
-    // Weather linkage is non-critical; return survey as-is
-  }
+  }, 100);
 
+  // Return the base object immediately so the app can unblock
   return saved;
 }
 

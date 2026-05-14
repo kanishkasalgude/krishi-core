@@ -12,7 +12,17 @@ async function uploadFiles(req, res, next) {
       mimetype: f.mimetype,
     }));
 
-    res.status(201).json({ success: true, count: files.length, data: files });
+    const firstFile = files[0] || {};
+    res.status(201).json({ 
+      success: true, 
+      count: files.length, 
+      data: files,
+      url: firstFile.path,
+      fileName: firstFile.filename,
+      path: firstFile.path,
+      uploadedAt: new Date().toISOString(),
+      message: 'Files uploaded successfully'
+    });
   } catch (err) {
     next(err);
   }
