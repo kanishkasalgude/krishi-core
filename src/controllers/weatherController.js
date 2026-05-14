@@ -4,7 +4,8 @@ const WEATHER_FILE = 'weather.json';
 
 async function getWeather(req, res, next) {
   try {
-    const data = await storage.readJSON(WEATHER_FILE);
+    // ── BUG-11: readCollection guarantees array even if file is malformed ──
+    const data = await storage.readCollection(WEATHER_FILE);
     const { village } = req.query;
 
     if (village) {

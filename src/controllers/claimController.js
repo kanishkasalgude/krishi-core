@@ -2,8 +2,11 @@ const claimService = require('../services/claimService');
 
 async function getAllClaims(req, res, next) {
   try {
-    const { status } = req.query;
-    const claims = await claimService.getAllClaims(status);
+    const { status, workflowStage } = req.query;
+    let claims = await claimService.getAllClaims(status);
+    if (workflowStage) {
+      claims = claims.filter(c => c.workflowStage === workflowStage);
+    }
     res.json({ success: true, count: claims.length, data: claims });
   } catch (err) {
     next(err);
@@ -48,20 +51,20 @@ async function createClaim(req, res, next) {
 async function updateClaimStatus(req, res, next) {
   try {
     const { id } = req.params;
-    const { status, officerRemark } = req.body;
+    const { status, officerRemark, workflowStage, assignedOfficer } = req.body;
 
     if (!status) {
       return res.status(400).json({ success: false, error: 'Status is required' });
     }
 
-    const updated = await claimService.updateClaimStatus(id, status, officerRemark);
+    const updated = await claimService.updateClaimStatus(id, status, officerRemark, workflowStage, assignedOfficer);
     if (!updated) {
       return res.status(404).json({ success: false, error: 'Claim not found' });
     }
 
     res.json({ success: true, data: updated });
   } catch (err) {
-    if (err.message && err.message.startsWith('Invalid status')) {
+    if (err.message && err.message.startsWith('Invalid status') || err.message && err.message.startsWith('Invalid workflow stage')) {
       return res.status(400).json({ success: false, error: err.message });
     }
     next(err);
@@ -71,11 +74,22 @@ async function updateClaimStatus(req, res, next) {
 async function getClaimsSummary(req, res, next) {
   try {
     const claims = await claimService.getAllClaims();
+    const pending = claims.filter(c => c.status === 'pending').length;
+    const approved = claims.filter(c => c.status === 'approved').length;
+    const rejected = claims.filter(c => c.status === 'rejected').length;
+
+    const workflowStageBreakdown = {};
+    for (const stage of claimService.WORKFLOW_STAGES) {
+      const count = claims.filter(c => c.workflowStage === stage).length;
+      if (count > 0) workflowStageBreakdown[stage] = count;
+    }
+
     const summary = {
       total: claims.length,
-      pending: claims.filter(c => c.status === 'pending').length,
-      approved: claims.filter(c => c.status === 'approved').length,
-      rejected: claims.filter(c => c.status === 'rejected').length,
+      pending,
+      approved,
+      rejected,
+      workflowStageBreakdown,
     };
     res.json({ success: true, data: summary });
   } catch (err) {

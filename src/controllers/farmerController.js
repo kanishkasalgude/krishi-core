@@ -13,7 +13,8 @@ async function getAllFarmers(req, res, next) {
 
 async function getFarmerById(req, res, next) {
   try {
-    const farmer = await storage.findById(FARMERS_FILE, req.params.id);
+    const farmers = await storage.readCollection(FARMERS_FILE);
+    const farmer = farmers.find(f => f.farmerId === req.params.id);
     if (!farmer) {
       return res.status(404).json({ success: false, error: 'Farmer not found' });
     }

@@ -1,7 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
+
+// ── BUG-02 / BUG-05: Global crash guard — keeps server alive during demo ──
+process.on('uncaughtException', (err) => {
+  console.error('[KRISHI] UNCAUGHT EXCEPTION — server staying alive:', err.message);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('[KRISHI] UNHANDLED REJECTION — server staying alive:', reason);
+});
+
+// ── BUG-03: Ensure uploads directory exists before multer tries to write ──
+const UPLOADS_DIR = path.join(__dirname, 'uploads');
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+  console.log('[KRISHI] Created missing uploads/ directory');
+}
 const { errorHandler, notFound } = require('./src/middleware/errorHandler');
 
 const farmerRoutes = require('./src/routes/farmers');
@@ -40,7 +56,17 @@ app.use('/api/upload', uploadRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`[KRISHI-PRABANDH] Server running on port ${PORT}`);
   console.log(`[KRISHI-PRABANDH] API: http://localhost:${PORT}/api`);
+});
+
+// ── BUG-05: Handle EADDRINUSE and other listen errors gracefully ──
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`[KRISHI] Port ${PORT} already in use. Exiting cleanly.`);
+  } else {
+    console.error('[KRISHI] Server error:', err.message);
+  }
+  process.exit(1);
 });
