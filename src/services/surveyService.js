@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const storage = require('../utils/storage');
 const farmerRegistry = require('./farmerRegistry');
 const aiService = require('./aiService');
+const reportService = require('./reportService');
 
 const SURVEYS_FILE = 'surveys.json';
 
@@ -132,6 +133,8 @@ async function submitSurvey(data, files = []) {
   const saved = await storage.addItem(SURVEYS_FILE, survey);
   if (!saved || !saved.id) return survey;
 
+  let finalSurvey = saved;
+
   try {
     const weatherLinkage = await resolveWeatherLinkage(farmerDetails);
     if (weatherLinkage) {
@@ -139,13 +142,20 @@ async function submitSurvey(data, files = []) {
         weatherLinkage,
         updatedAt: new Date().toISOString(),
       });
-      return updated || saved;
+      if (updated) finalSurvey = updated;
     }
   } catch {
     // Weather linkage is non-critical; return survey as-is
   }
 
-  return saved;
+  try {
+    const grievances = await getGrievanceLinkage(finalSurvey.reportId || finalSurvey.id);
+    await reportService.createReport(finalSurvey, grievances);
+  } catch {
+    // Report persistence is non-critical
+  }
+
+  return finalSurvey;
 }
 
 async function resolveWeatherLinkage(farmerDetails) {
@@ -271,7 +281,17 @@ async function performSahayakAction(id, action, payload = {}) {
       break;
   }
 
-  return storage.updateItem(SURVEYS_FILE, id, updates);
+  const updated = await storage.updateItem(SURVEYS_FILE, id, updates);
+
+  try {
+    if (updated) {
+      await reportService.syncReportFromSurvey(updated);
+    }
+  } catch {
+    // Report sync is non-critical
+  }
+
+  return updated;
 }
 
 async function getGrievanceLinkage(surveyId) {

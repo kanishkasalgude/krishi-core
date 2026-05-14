@@ -27,6 +27,7 @@ const kycRoutes = require('./src/routes/kyc');
 const paymentRoutes = require('./src/routes/payments');
 const uploadRoutes = require('./src/routes/upload');
 const surveyRoutes = require('./src/routes/surveys');
+const reportRoutes = require('./src/routes/reports');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -54,6 +55,7 @@ app.use('/api/kyc', kycRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/surveys', surveyRoutes);
+app.use('/api/reports', reportRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
