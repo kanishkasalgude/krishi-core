@@ -112,7 +112,7 @@ async function submitSurvey(data, files = []) {
     videos,
     evidenceCount: images.length + videos.length,
     status: 'pending',
-    workflowStage: 'Survey Submitted',
+    workflowStage: 'Pending Sahayak Verification',
     severity: getSeverityLevel(analysis),
     confidenceScore: analysis.confidenceScore,
     geoVerified: analysis.geoVerified,
@@ -129,21 +129,23 @@ async function submitSurvey(data, files = []) {
     updatedAt: new Date().toISOString(),
   };
 
-  const stored = await storage.addItem(SURVEYS_FILE, survey);
+  const saved = await storage.addItem(SURVEYS_FILE, survey);
+  if (!saved || !saved.id) return survey;
 
-  const weatherLinkage = await resolveWeatherLinkage(farmerDetails);
-  if (weatherLinkage) {
-    return storage.updateItem(SURVEYS_FILE, stored.id, {
-      weatherLinkage,
-      workflowStage: 'Pending Sahayak Verification',
-      updatedAt: new Date().toISOString(),
-    });
+  try {
+    const weatherLinkage = await resolveWeatherLinkage(farmerDetails);
+    if (weatherLinkage) {
+      const updated = await storage.updateItem(SURVEYS_FILE, saved.id, {
+        weatherLinkage,
+        updatedAt: new Date().toISOString(),
+      });
+      return updated || saved;
+    }
+  } catch {
+    // Weather linkage is non-critical; return survey as-is
   }
 
-  return storage.updateItem(SURVEYS_FILE, stored.id, {
-    workflowStage: 'Pending Sahayak Verification',
-    updatedAt: new Date().toISOString(),
-  });
+  return saved;
 }
 
 async function resolveWeatherLinkage(farmerDetails) {
