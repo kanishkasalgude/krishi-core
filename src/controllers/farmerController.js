@@ -1,11 +1,15 @@
+const farmerRegistry = require('../services/farmerRegistry');
 const storage = require('../utils/storage');
-
-const FARMERS_FILE = 'farmers.json';
 
 async function getAllFarmers(req, res, next) {
   try {
-    const farmers = await storage.readCollection(FARMERS_FILE);
-    res.json({ success: true, count: farmers.length, data: farmers });
+    const farmers = farmerRegistry.getAllFarmers();
+    const { village, taluka, district } = req.query;
+    let filtered = farmers;
+    if (village) filtered = filtered.filter(f => f.village === village);
+    if (taluka) filtered = filtered.filter(f => f.taluka === taluka);
+    if (district) filtered = filtered.filter(f => f.district === district);
+    res.json({ success: true, count: filtered.length, data: filtered });
   } catch (err) {
     next(err);
   }
@@ -13,8 +17,7 @@ async function getAllFarmers(req, res, next) {
 
 async function getFarmerById(req, res, next) {
   try {
-    const farmers = await storage.readCollection(FARMERS_FILE);
-    const farmer = farmers.find(f => f.farmerId === req.params.id);
+    const farmer = farmerRegistry.getFarmerDetails(req.params.id);
     if (!farmer) {
       return res.status(404).json({ success: false, error: 'Farmer not found' });
     }
@@ -27,6 +30,10 @@ async function getFarmerById(req, res, next) {
 async function getFarmerClaims(req, res, next) {
   try {
     const { id } = req.params;
+    const farmer = farmerRegistry.findFarmerById(id);
+    if (!farmer) {
+      return res.status(404).json({ success: false, error: 'Farmer not found' });
+    }
     const claims = await storage.query('claims.json', c => c.farmerId === id);
     res.json({ success: true, count: claims.length, data: claims });
   } catch (err) {
@@ -34,4 +41,18 @@ async function getFarmerClaims(req, res, next) {
   }
 }
 
-module.exports = { getAllFarmers, getFarmerById, getFarmerClaims };
+async function getFarmerSurveys(req, res, next) {
+  try {
+    const { id } = req.params;
+    const farmer = farmerRegistry.findFarmerById(id);
+    if (!farmer) {
+      return res.status(404).json({ success: false, error: 'Farmer not found' });
+    }
+    const surveys = await storage.query('surveys.json', s => s.farmerId === id);
+    res.json({ success: true, count: surveys.length, data: surveys });
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { getAllFarmers, getFarmerById, getFarmerClaims, getFarmerSurveys };

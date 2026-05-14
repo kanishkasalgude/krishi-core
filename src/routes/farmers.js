@@ -6,5 +6,6 @@ const router = Router();
 router.get('/', controller.getAllFarmers);
 router.get('/:id', controller.getFarmerById);
 router.get('/:id/claims', controller.getFarmerClaims);
+router.get('/:id/surveys', controller.getFarmerSurveys);
 
 module.exports = router;
