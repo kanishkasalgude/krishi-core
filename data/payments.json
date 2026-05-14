@@ -1,0 +1,67 @@
+[
+  {
+    "id": "PAY-001",
+    "claimId": "CLM-003",
+    "farmerId": "FARM-005",
+    "farmerName": "Bhola Yadav",
+    "amount": 48500,
+    "status": "disbursed",
+    "disbursedAt": "2026-05-14T10:30:00Z",
+    "bankAccount": "XXXXXX7890",
+    "ifscCode": "SBIN0007890",
+    "transactionRef": "TXN-2026-05-14-001",
+    "remarks": "Full claim amount disbursed - flood damage"
+  },
+  {
+    "id": "PAY-002",
+    "claimId": "CLM-004",
+    "farmerId": "FARM-004",
+    "farmerName": "Gita Verma",
+    "amount": 0,
+    "status": "cancelled",
+    "disbursedAt": null,
+    "bankAccount": "XXXXXX3456",
+    "ifscCode": "SBIN0003456",
+    "transactionRef": null,
+    "remarks": "Claim rejected - payment cancelled"
+  },
+  {
+    "id": "PAY-003",
+    "claimId": "CLM-001",
+    "farmerId": "FARM-001",
+    "farmerName": "Ramesh Singh",
+    "amount": 32000,
+    "status": "approved",
+    "disbursedAt": null,
+    "bankAccount": "XXXXXX1234",
+    "ifscCode": "SBIN0001234",
+    "transactionRef": null,
+    "remarks": "Approved - pending fund release"
+  },
+  {
+    "id": "PAY-004",
+    "claimId": "CLM-002",
+    "farmerId": "FARM-002",
+    "farmerName": "Sita Devi",
+    "amount": 18500,
+    "status": "pending",
+    "disbursedAt": null,
+    "bankAccount": "XXXXXX5678",
+    "ifscCode": "SBIN0005678",
+    "transactionRef": null,
+    "remarks": "Awaiting officer approval"
+  },
+  {
+    "id": "PAY-005",
+    "claimId": "CLM-005",
+    "farmerId": "FARM-003",
+    "farmerName": "Amar Patil",
+    "amount": 22500,
+    "status": "pending",
+    "disbursedAt": null,
+    "bankAccount": "XXXXXX9012",
+    "ifscCode": "SBIN0009012",
+    "transactionRef": null,
+    "remarks": "Awaiting officer approval"
+  }
+]

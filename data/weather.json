@@ -1,0 +1,112 @@
+[
+  {
+    "id": "WTH-001",
+    "village": "Barwani",
+    "district": "Khargone",
+    "date": "2026-05-10",
+    "rainfallMm": 48.5,
+    "temperature": 28.3,
+    "humidity": 72,
+    "forecast": "Moderate rain expected",
+    "alert": false
+  },
+  {
+    "id": "WTH-002",
+    "village": "Barwani",
+    "district": "Khargone",
+    "date": "2026-05-11",
+    "rainfallMm": 12.2,
+    "temperature": 31.5,
+    "humidity": 65,
+    "forecast": "Partly cloudy",
+    "alert": false
+  },
+  {
+    "id": "WTH-003",
+    "village": "Barwani",
+    "district": "Khargone",
+    "date": "2026-05-12",
+    "rainfallMm": 0,
+    "temperature": 34.1,
+    "humidity": 48,
+    "forecast": "Clear sky",
+    "alert": false
+  },
+  {
+    "id": "WTH-004",
+    "village": "Kasrawad",
+    "district": "Khargone",
+    "date": "2026-05-10",
+    "rainfallMm": 32.1,
+    "temperature": 29.8,
+    "humidity": 78,
+    "forecast": "Heavy rain expected",
+    "alert": true
+  },
+  {
+    "id": "WTH-005",
+    "village": "Kasrawad",
+    "district": "Khargone",
+    "date": "2026-05-11",
+    "rainfallMm": 8.7,
+    "temperature": 32.4,
+    "humidity": 60,
+    "forecast": "Light drizzle",
+    "alert": false
+  },
+  {
+    "id": "WTH-006",
+    "village": "Segaon",
+    "district": "Khargone",
+    "date": "2026-05-10",
+    "rainfallMm": 0,
+    "temperature": 36.2,
+    "humidity": 35,
+    "forecast": "Heatwave warning",
+    "alert": true
+  },
+  {
+    "id": "WTH-007",
+    "village": "Jhirniya",
+    "district": "Barwani",
+    "date": "2026-05-12",
+    "rainfallMm": 0,
+    "temperature": 37.5,
+    "humidity": 30,
+    "forecast": "Extreme heat - no rain",
+    "alert": true
+  },
+  {
+    "id": "WTH-008",
+    "village": "Punasa",
+    "district": "Khandwa",
+    "date": "2026-05-08",
+    "rainfallMm": 65.3,
+    "temperature": 26.7,
+    "humidity": 85,
+    "forecast": "Flood advisory active",
+    "alert": true
+  },
+  {
+    "id": "WTH-009",
+    "village": "Punasa",
+    "district": "Khandwa",
+    "date": "2026-05-09",
+    "rainfallMm": 22.8,
+    "temperature": 29.1,
+    "humidity": 70,
+    "forecast": "Rain decreasing",
+    "alert": false
+  },
+  {
+    "id": "WTH-010",
+    "village": "Bhikangaon",
+    "district": "Khargone",
+    "date": "2026-05-13",
+    "rainfallMm": 5.5,
+    "temperature": 33.2,
+    "humidity": 55,
+    "forecast": "Scattered clouds",
+    "alert": false
+  }
+]

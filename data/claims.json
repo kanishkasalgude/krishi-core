@@ -69,7 +69,7 @@
       "lat": 22.2367,
       "lng": 76.3489
     },
-    "lossAreaAcres": 4.0,
+    "lossAreaAcres": 4,
     "description": "Continuous rainfall caused waterlogging and crop rot",
     "status": "approved",
     "confidenceScore": 94,
@@ -127,7 +127,7 @@
       "lat": 22.0789,
       "lng": 75.1123
     },
-    "lossAreaAcres": 3.0,
+    "lossAreaAcres": 3,
     "description": "Wild animal herd damaged maize field overnight",
     "status": "pending",
     "confidenceScore": 68,

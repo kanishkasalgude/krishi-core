@@ -1,0 +1,74 @@
+[
+  {
+    "id": "KYC-001",
+    "farmerId": "FARM-001",
+    "farmerName": "Ramesh Singh",
+    "aadhaar": "XXXX-XXXX-1234",
+    "panCard": "XXXXX1234X",
+    "bankAccount": "XXXXXX1234",
+    "ifscCode": "SBIN0001234",
+    "status": "verified",
+    "verifiedAt": "2025-01-20T10:00:00Z",
+    "remarks": "All documents verified in person"
+  },
+  {
+    "id": "KYC-002",
+    "farmerId": "FARM-002",
+    "farmerName": "Sita Devi",
+    "aadhaar": "XXXX-XXXX-5678",
+    "panCard": "XXXXX5678X",
+    "bankAccount": "XXXXXX5678",
+    "ifscCode": "SBIN0005678",
+    "status": "verified",
+    "verifiedAt": "2025-02-15T11:30:00Z",
+    "remarks": "Verified via video KYC"
+  },
+  {
+    "id": "KYC-003",
+    "farmerId": "FARM-003",
+    "farmerName": "Amar Patil",
+    "aadhaar": "XXXX-XXXX-9012",
+    "panCard": "XXXXX9012X",
+    "bankAccount": "XXXXXX9012",
+    "ifscCode": "SBIN0009012",
+    "status": "pending",
+    "verifiedAt": null,
+    "remarks": "Awaiting document verification"
+  },
+  {
+    "id": "KYC-004",
+    "farmerId": "FARM-004",
+    "farmerName": "Gita Verma",
+    "aadhaar": "XXXX-XXXX-3456",
+    "panCard": "XXXXX3456X",
+    "bankAccount": "XXXXXX3456",
+    "ifscCode": "SBIN0003456",
+    "status": "verified",
+    "verifiedAt": "2025-01-25T09:15:00Z",
+    "remarks": "All documents verified"
+  },
+  {
+    "id": "KYC-005",
+    "farmerId": "FARM-005",
+    "farmerName": "Bhola Yadav",
+    "aadhaar": "XXXX-XXXX-7890",
+    "panCard": "XXXXX7890X",
+    "bankAccount": "XXXXXX7890",
+    "ifscCode": "SBIN0007890",
+    "status": "verified",
+    "verifiedAt": "2025-04-18T14:00:00Z",
+    "remarks": "Verified in camp"
+  },
+  {
+    "id": "KYC-006",
+    "farmerId": "FARM-006",
+    "farmerName": "Sunita Bai",
+    "aadhaar": "XXXX-XXXX-1111",
+    "panCard": null,
+    "bankAccount": "XXXXXX1111",
+    "ifscCode": "SBIN0001111",
+    "status": "rejected",
+    "verifiedAt": null,
+    "remarks": "Aadhaar name mismatch with bank records"
+  }
+]
