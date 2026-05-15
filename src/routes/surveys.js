@@ -4,6 +4,7 @@ const upload = require('../middleware/upload');
 
 const router = Router();
 
+router.get('/debug/latest-surveys', controller.getLatestSurveys);
 router.get('/', controller.getAllSurveys);
 router.get('/queue', controller.getSahayakQueue);
 router.get('/summary', controller.getDashboardSummary);

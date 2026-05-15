@@ -107,6 +107,26 @@ async function generateReport(req, res, next) {
   }
 }
 
+async function getLatestSurveys(req, res, next) {
+  try {
+    const surveys = await surveyService.getAllSurveys({});
+    const latest = surveys.slice(0, 20).map(s => ({
+      id: s.id,
+      farmerId: s.farmerId,
+      status: s.status,
+      workflowStage: s.workflowStage,
+      uploadStatus: s.uploadStatus,
+      officerStatus: s.officerStatus,
+      createdAt: s.createdAt,
+      updatedAt: s.updatedAt,
+      assignedOfficer: s.assignedOfficer
+    }));
+    res.json({ success: true, count: latest.length, data: latest });
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   submitSurvey,
   getAllSurveys,
@@ -116,4 +136,5 @@ module.exports = {
   performAction,
   getGrievanceLinkage,
   generateReport,
+  getLatestSurveys,
 };

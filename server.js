@@ -66,6 +66,24 @@ app.use(errorHandler);
 const server = app.listen(PORT, () => {
   console.log(`[KRISHI-PRABANDH] Server running on port ${PORT}`);
   console.log(`[KRISHI-PRABANDH] API: http://localhost:${PORT}/api`);
+  
+  // Detect local IP to help the user
+  const os = require('os');
+  const nets = os.networkInterfaces();
+  let localIp = '127.0.0.1';
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      if (net.family === 'IPv4' && !net.internal) {
+        localIp = net.address;
+        break;
+      }
+    }
+  }
+  
+  console.log('\n========================================================');
+  console.log(`👉 YOUR LOCAL IP ADDRESS IS: ${localIp}`);
+  console.log(`Put this in Android Studio Constants.kt: http://${localIp}:5000/`);
+  console.log('========================================================\n');
 });
 server.timeout = 600000;
 

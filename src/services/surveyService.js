@@ -120,8 +120,10 @@ async function submitSurvey(data, files = []) {
     images,
     videos,
     evidenceCount: images.length + videos.length,
-    status: 'processing',
-    workflowStage: 'Survey Submitted',
+    status: 'PROCESSING_MEDIA',
+    workflowStage: 'AI_PROCESSING',
+    uploadStatus: 'PROCESSING',
+    officerStatus: 'PENDING_REVIEW',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -146,8 +148,8 @@ async function submitSurvey(data, files = []) {
         duplicateRisk: analysis.duplicateRisk,
         aiRemarks: analysis.aiRemarks,
         weatherEvent: analysis.rainfallMatched ? 'Weather Anomaly Detected' : 'No Weather Anomaly',
-        status: 'pending',
-        workflowStage: 'Pending Sahayak Verification',
+        status: 'PENDING_OFFICER_REVIEW',
+        workflowStage: 'PENDING_OFFICER_REVIEW',
         weatherLinkage,
         updatedAt: new Date().toISOString(),
       };
@@ -203,7 +205,14 @@ async function getSurveyById(id) {
 async function getSahayakQueue() {
   let surveys = await storage.readCollection(SURVEYS_FILE);
   return surveys
-    .filter(s => s.workflowStage === 'Pending Sahayak Verification' || s.workflowStage === 'Re-Survey Requested')
+    .filter(s => [
+      'PROCESSING_MEDIA',
+      'AI_PROCESSING',
+      'PENDING_OFFICER_REVIEW',
+      'Pending Sahayak Verification',
+      'Re-Survey Requested',
+      'Survey Submitted'
+    ].includes(s.workflowStage) || ['PROCESSING_MEDIA', 'AI_PROCESSING', 'PENDING_OFFICER_REVIEW', 'processing', 'pending'].includes(s.status))
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 }
 

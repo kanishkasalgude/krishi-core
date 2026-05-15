@@ -1,0 +1,71 @@
+[
+  {
+    "id": "SRV-552E6D58",
+    "reportId": "SRV-552E6D58",
+    "farmerId": "7681573780",
+    "farmerName": "Mamta Kulkarni",
+    "farmerDetails": {
+      "mobile": "7681573780",
+      "aadhaarMasked": "XXXX-XXXX-8071",
+      "gender": "Female",
+      "age": 64,
+      "district": "Nanded",
+      "taluka": "Hadgaon",
+      "village": "Hadgaon_Village_48",
+      "khasraNumber": "775/30",
+      "gatNumber": "775/30",
+      "landHoldingHa": 10.12,
+      "landType": "Canal-irrigated",
+      "soilType": "Medium Black",
+      "irrigationSource": "Tank",
+      "primaryCrop": "Paddy",
+      "secondaryCrop": "Chana Dal",
+      "pmKisanBeneficiary": false,
+      "pmfbyEnrolled": false,
+      "ndviBaseline": 0.793,
+      "ndviCurrent": 0.743,
+      "ndviDropPct": 6.3,
+      "lastDamageScorePct": 29.3,
+      "lastClaimStatus": "Approved"
+    },
+    "landParcelDetails": {
+      "landParcelId": "775/30",
+      "khasraNumber": "775/30",
+      "gatNumber": "775/30",
+      "landHoldingHa": 10.12,
+      "landType": "Canal-irrigated",
+      "soilType": "Medium Black",
+      "irrigationSource": "Tank",
+      "plotCentroidLat": 19.276123,
+      "plotCentroidLon": 77.311463,
+      "plotBoundaryRadiusM": 179.5
+    },
+    "cropType": "Paddy",
+    "damageType": "Cyclone",
+    "village": "Hadgaon_Village_48",
+    "taluka": "Hadgaon",
+    "district": "Nanded",
+    "state": "Maharashtra",
+    "geoCoordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "description": "Loss claim due to Cyclone",
+    "remarks": "",
+    "images": [
+      "/uploads/images/1778810660481-376851251.jpg",
+      "/uploads/images/1778810661173-755394262.jpg",
+      "/uploads/images/1778810661712-554556868.jpg"
+    ],
+    "videos": [
+      "/uploads/videos/1778810662228-416169542.mp4"
+    ],
+    "evidenceCount": 4,
+    "status": "PROCESSING_MEDIA",
+    "workflowStage": "AI_PROCESSING",
+    "uploadStatus": "PROCESSING",
+    "officerStatus": "PENDING_REVIEW",
+    "createdAt": "2026-05-15T02:04:24.727Z",
+    "updatedAt": "2026-05-15T02:04:24.728Z"
+  }
+]
