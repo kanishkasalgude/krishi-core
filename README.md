@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo/KRISHI_PRABANDH_LOGO.png" width="120" alt="Krishi Prabandh Logo" />
+  <img src="../Krishi%20Prabandh%20SwaSurvey%20App/logo/KRISHI_PRABANDH_LOGO.png" width="120" alt="Krishi Prabandh Logo" />
 </p>
 
 <h1 align="center">Krishi Prabandh Core Backend</h1>
@@ -23,19 +23,19 @@ Built with a monolithic Node.js + Express architecture, it processes complex mul
 
 ## Core Features
 
-### 📡 Unified REST API
+### Unified REST API
 Serves as the gateway for mobile app synchronization and web portal data fetching. Manages farmers, agricultural claims, and verification records.
 
-### 🧠 Mock Intelligence Layer
+### Mock Intelligence Layer
 Automatically simulates complex AI analysis on incoming claims:
 - Confidence Scoring (55-95)
 - Geolocation Validation
 - Duplicate Risk Assessment
 
-### 💾 Robust File Handling
+### Robust File Handling
 Supports high-volume multimedia uploads from field applications, safely processing and storing large geotagged image and video files via Multer middleware.
 
-### ⏱️ Live Polling Support
+### Live Polling Support
 Optimized to handle 5-second interval live polling from the Web Portal dashboard, ensuring officers see applications the moment farmers press submit in the field.
 
 ---
