@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const storage = require('../utils/storage');
 const farmerRegistry = require('./farmerRegistry');
 const aiService = require('./aiService');
+const reportService = require('./reportService');
 
 const SURVEYS_FILE = 'surveys.json';
 
@@ -132,11 +133,11 @@ async function submitSurvey(data, files = []) {
   setTimeout(async () => {
     try {
       console.log(`[KRISHI] Starting background processing for survey ${saved.id}...`);
-      
+
       // Simulate heavy AI processing and video encoding
       const analysis = aiService.analyzeClaim({ cropType: data.cropType, village: data.village });
       const weatherLinkage = await resolveWeatherLinkage(farmerDetails);
-      
+
       const updates = {
         severity: getSeverityLevel(analysis),
         confidenceScore: analysis.confidenceScore,
@@ -150,7 +151,7 @@ async function submitSurvey(data, files = []) {
         weatherLinkage,
         updatedAt: new Date().toISOString(),
       };
-      
+
       await storage.updateItem(SURVEYS_FILE, saved.id, updates);
       console.log(`[KRISHI] Background processing completed for survey ${saved.id}`);
     } catch (err) {
@@ -285,14 +286,24 @@ async function performSahayakAction(id, action, payload = {}) {
       break;
   }
 
-  return storage.updateItem(SURVEYS_FILE, id, updates);
+  const updated = await storage.updateItem(SURVEYS_FILE, id, updates);
+
+  try {
+    if (updated) {
+      await reportService.syncReportFromSurvey(updated);
+    }
+  } catch {
+    // Report sync is non-critical
+  }
+
+  return updated;
 }
 
 async function getGrievanceLinkage(surveyId) {
   const survey = await getSurveyById(surveyId);
   if (!survey) return null;
   const claims = await storage.query('claims.json', c => c.farmerId === survey.farmerId);
-  return claims.length > 0 ? claims : null;
+  return claims.length > 0 ? claims : [];
 }
 
 module.exports = {

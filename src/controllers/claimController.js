@@ -30,10 +30,10 @@ async function createClaim(req, res, next) {
     const files = req.files || [];
     const images = files
       .filter(f => f.mimetype.startsWith('image/'))
-      .map(f => `/uploads/${f.filename}`);
+      .map(f => `/uploads/images/${f.filename}`);
     const videos = files
       .filter(f => f.mimetype.startsWith('video/'))
-      .map(f => `/uploads/${f.filename}`);
+      .map(f => `/uploads/videos/${f.filename}`);
 
     const claimData = {
       ...req.body,
