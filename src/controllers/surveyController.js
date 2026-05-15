@@ -4,7 +4,7 @@ async function submitSurvey(req, res, next) {
   try {
     const files = req.files || [];
     const survey = await surveyService.submitSurvey(req.body, files);
-    res.status(201).json({ success: true, data: survey });
+    res.status(201).json({ success: true, surveyId: survey.id, status: 'PROCESSING' });
   } catch (err) {
     if (err.statusCode) {
       return res.status(err.statusCode).json({ success: false, error: err.message });
