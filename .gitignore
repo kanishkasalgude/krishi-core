@@ -1,0 +1,10 @@
+# Dependencies (install with npm ci)
+node_modules/
+
+# Local environment (copy .env.example to .env)
+.env
+.env.*
+!.env.example
+
+# Uploaded files
+uploads/
